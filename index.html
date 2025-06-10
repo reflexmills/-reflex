@@ -5,17 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Reflex | Переходник</title>
   <style>
-    body {
+    html, body {
       margin: 0;
       padding: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: 'Arial', sans-serif;
+      height: 100%;
+      background: black;
+      font-family: Arial, sans-serif;
       overflow: hidden;
-      background-color: #000;
-      color: white;
     }
 
     .video-background {
@@ -24,44 +20,46 @@
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: -1;
       object-fit: cover;
+      z-index: -1;
       opacity: 0.8;
     }
 
     .content {
-      text-align: center;
+      position: relative;
       z-index: 1;
-      width: 90%;
-      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      text-align: center;
+      padding: 20px;
+      color: white;
     }
 
     .title {
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       margin-bottom: 30px;
       font-weight: bold;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
     }
 
     .buttons-column {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
       margin-bottom: 30px;
     }
 
     .btn {
-      background-color: #000;
+      background-color: black;
       color: white;
       border: 2px solid white;
-      padding: 15px;
-      text-align: center;
+      padding: 12px;
       text-decoration: none;
       font-weight: bold;
-      font-size: 1.1rem;
-      transition: all 0.3s;
-      cursor: pointer;
-      border-radius: 0;
+      font-size: 1rem;
+      border-radius: 5px;
     }
 
     .btn:hover {
@@ -69,30 +67,24 @@
     }
 
     .player-container {
-      margin-top: 30px;
-      background-color: rgba(0, 0, 0, 0.7);
+      background-color: rgba(0, 0, 0, 0.6);
       padding: 15px;
-      border-radius: 5px;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 300px;
     }
 
     .track-info {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 10px;
       font-size: 1rem;
-    }
-
-    .track-name {
-      font-weight: bold;
-    }
-
-    .track-duration {
-      opacity: 0.8;
+      margin-bottom: 10px;
     }
 
     .progress-bar {
-      height: 3px;
-      background-color: #333;
+      width: 100%;
+      height: 4px;
+      background: #555;
       margin-bottom: 15px;
       position: relative;
     }
@@ -104,79 +96,75 @@
     }
 
     .music-btn {
-      background-color: #000;
+      background-color: black;
       color: white;
       border: 2px solid white;
       padding: 10px 25px;
       font-weight: bold;
-      cursor: pointer;
-      border-radius: 0;
       font-size: 1rem;
-    }
-
-    .music-btn:hover {
-      background-color: #222;
+      border-radius: 5px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <!-- Видео-фон -->
-  <video autoplay muted loop class="video-background">
-    <source src="https://cdn.coverr.co/videos/coverr-dark-waves-5277/1080p.mp4" type="video/mp4">
-  </video>
 
-  <div class="content">
-    <div class="title">Reflex | Переходник</div>
+<video autoplay muted loop playsinline class="video-background">
+  <source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
+</video>
 
-    <div class="buttons-column">
-      <a href="https://vk.com/yareflex" class="btn">VK</a>
-      <a href="https://t.me/yareflex1" class="btn">Telegram</a>
-      <a href="https://forum.blackrussia.online/members/reflex_mills.2835116/" class="btn">Forum</a>
-    </div>
+<div class="content">
+  <div class="title">Reflex | Переходник</div>
 
-    <div class="player-container">
-      <div class="track-info">
-        <span class="track-name">Reflex Audio</span>
-        <span class="track-duration">2:28</span>
-      </div>
-      <div class="progress-bar">
-        <div class="progress" id="progress"></div>
-      </div>
-      <button class="music-btn" onclick="toggleMusic()">Включить</button>
-    </div>
+  <div class="buttons-column">
+    <a href="https://vk.com/yareflex" class="btn">VK</a>
+    <a href="https://t.me/yareflex1" class="btn">Telegram</a>
+    <a href="https://forum.blackrussia.online/members/reflex_mills.2835116/" class="btn">Forum</a>
   </div>
 
-  <audio id="bgMusic" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-  </audio>
+  <div class="player-container">
+    <div class="track-info">
+      <span class="track-name">Reflex Audio</span>
+      <span class="track-duration">2:28</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress" id="progress"></div>
+    </div>
+    <button class="music-btn" onclick="toggleMusic()">▶ Включить</button>
+  </div>
+</div>
 
-  <script>
-    const music = document.getElementById('bgMusic');
-    const progress = document.getElementById('progress');
-    const toggleBtn = document.querySelector('.music-btn');
+<audio id="bgMusic" preload="auto">
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
 
-    let isPlaying = false;
+<script>
+  const music = document.getElementById('bgMusic');
+  const progress = document.getElementById('progress');
+  const btn = document.querySelector('.music-btn');
 
-    function toggleMusic() {
-      if (isPlaying) {
-        music.pause();
-        toggleBtn.textContent = "Продолжить";
-      } else {
-        music.play().then(() => {
-          toggleBtn.textContent = "Пауза";
-        }).catch(err => {
-          alert("Ошибка воспроизведения. Попробуй ещё раз.");
-        });
-      }
-      isPlaying = !isPlaying;
+  let isPlaying = false;
+
+  function toggleMusic() {
+    if (!isPlaying) {
+      music.play().then(() => {
+        btn.textContent = '⏸ Пауза';
+        isPlaying = true;
+      }).catch(err => {
+        alert("Нажми на экран — тогда начнётся музыка (ограничения браузера)");
+      });
+    } else {
+      music.pause();
+      btn.textContent = '▶ Продолжить';
+      isPlaying = false;
     }
+  }
 
-    music.volume = 0.5;
+  music.addEventListener('timeupdate', () => {
+    const percent = (music.currentTime / music.duration) * 100;
+    progress.style.width = percent + '%';
+  });
+</script>
 
-    music.addEventListener('timeupdate', () => {
-      const progressPercent = (music.currentTime / music.duration) * 100;
-      progress.style.width = progressPercent + '%';
-    });
-  </script>
 </body>
 </html>
