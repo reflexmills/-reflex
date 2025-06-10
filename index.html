@@ -1,277 +1,188 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reflex | Переходник</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Arial', sans-serif;
-            overflow: hidden;
-            background-color: #000;
-            color: white;
-        }
-        
-        .video-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            object-fit: cover;
-            opacity: 0.8;
-        }
-        
-        .content {
-            text-align: center;
-            z-index: 1;
-            width: 90%;
-            max-width: 400px;
-        }
-        
-        .title {
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            font-weight: bold;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-        }
-        
-        .buttons-column {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 30px;
-        }
-        
-        .btn {
-            background-color: #000;
-            color: white;
-            border: 2px solid white;
-            padding: 15px;
-            text-align: center;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: all 0.3s;
-            cursor: pointer;
-            border-radius: 0;
-        }
-        
-        .btn:hover {
-            background-color: #222;
-        }
-        
-        .player-container {
-            margin-top: 30px;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 15px;
-            border-radius: 5px;
-        }
-        
-        .track-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-size: 1rem;
-        }
-        
-        .track-name {
-            font-weight: bold;
-        }
-        
-        .track-duration {
-            opacity: 0.8;
-        }
-        
-        .progress-bar {
-            height: 3px;
-            background-color: #333;
-            margin-bottom: 15px;
-            position: relative;
-        }
-        
-        .progress {
-            height: 100%;
-            background-color: white;
-            width: 0%;
-        }
-        
-        .music-btn {
-            background-color: #000;
-            color: white;
-            border: 2px solid white;
-            padding: 10px 25px;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 0;
-            font-size: 1rem;
-        }
-        
-        .music-btn:hover {
-            background-color: #222;
-        }
-        
-        .compliment {
-            position: absolute;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-            animation: floatDown 8s linear forwards;
-            z-index: 0;
-            pointer-events: none;
-            white-space: nowrap;
-            opacity: 0;
-        }
-        
-        @keyframes floatDown {
-            0% {
-                transform: translateY(-100px) translateX(calc(-50% + var(--random-offset)));
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) translateX(calc(-50% + var(--random-offset)));
-                opacity: 0;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reflex | Переходник</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Arial', sans-serif;
+      overflow: hidden;
+      background-color: #000;
+      color: white;
+    }
+
+    .video-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      object-fit: cover;
+      opacity: 0.8;
+    }
+
+    .content {
+      text-align: center;
+      z-index: 1;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .title {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      font-weight: bold;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+
+    .buttons-column {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      background-color: #000;
+      color: white;
+      border: 2px solid white;
+      padding: 15px;
+      text-align: center;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      transition: all 0.3s;
+      cursor: pointer;
+      border-radius: 0;
+    }
+
+    .btn:hover {
+      background-color: #222;
+    }
+
+    .player-container {
+      margin-top: 30px;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 15px;
+      border-radius: 5px;
+    }
+
+    .track-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+
+    .track-name {
+      font-weight: bold;
+    }
+
+    .track-duration {
+      opacity: 0.8;
+    }
+
+    .progress-bar {
+      height: 3px;
+      background-color: #333;
+      margin-bottom: 15px;
+      position: relative;
+    }
+
+    .progress {
+      height: 100%;
+      background-color: white;
+      width: 0%;
+    }
+
+    .music-btn {
+      background-color: #000;
+      color: white;
+      border: 2px solid white;
+      padding: 10px 25px;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 0;
+      font-size: 1rem;
+    }
+
+    .music-btn:hover {
+      background-color: #222;
+    }
+  </style>
 </head>
 <body>
-    <video autoplay muted loop class="video-background">
-        <source src="https://streamable.com/f2yrfb" type="video/mp4">
-    </video>
-    
-    <div class="content">
-        <div class="title">Reflex | Переходник</div>
-        
-        <div class="buttons-column">
-            <a href="https://vk.com/yareflex" class="btn">VK</a>
-            <a href="https://t.me/yareflex1" class="btn">Telegram</a>
-            <a href="https://forum.blackrussia.online/members/reflex_mills.2835116/" class="btn">Forum</a>
-        </div>
-        
-        <div class="player-container">
-            <div class="track-info">
-                <span class="track-name">Under My Skin</span>
-                <span class="track-duration">2:28</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress" id="progress"></div>
-            </div>
-            <button class="music-btn" onclick="toggleMusic()">Пауза</button>
-        </div>
+  <!-- Тёмный видеофон -->
+  <video autoplay muted loop class="video-background">
+    <source src="https://cdn.pixabay.com/vimeo/346248188/Particles%20Background%20Loop%202%2016208.mp4?width=1280&hash=8401d37c0f1f68e776bde464d45772dddbaf38ff" type="video/mp4">
+  </video>
+
+  <div class="content">
+    <div class="title">Reflex | Переходник</div>
+
+    <div class="buttons-column">
+      <a href="https://vk.com/yareflex" class="btn">VK</a>
+      <a href="https://t.me/yareflex1" class="btn">Telegram</a>
+      <a href="https://forum.blackrussia.online/members/reflex_mills.2835116/" class="btn">Forum</a>
     </div>
 
-    <audio id="bgMusic" loop>
-        <source src="https://voca.ro/1o2D1nSLZgrW" type="audio/mpeg">
-    </audio>
+    <div class="player-container">
+      <div class="track-info">
+        <span class="track-name">Reflex Audio</span>
+        <span class="track-duration">2:28</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+      </div>
+      <button class="music-btn" onclick="toggleMusic()">Пауза</button>
+    </div>
+  </div>
 
-    <script>
-        // Музыкальный плеер
-        const music = document.getElementById('bgMusic');
-        const progress = document.getElementById('progress');
-        const toggleBtn = document.querySelector('.music-btn');
-        
-        music.volume = 0.5;
-        
-        // Автовоспроизведение
-        document.addEventListener('DOMContentLoaded', function() {
-            const playPromise = music.play();
-            
-            if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                    toggleBtn.textContent = "Включить";
-                });
-            }
-            
-            // Обновление прогресса
-            music.addEventListener('timeupdate', updateProgress);
+  <audio id="bgMusic" loop>
+    <source src="https://media1.vocaroo.com/mp3/1o2D1nSLZgrW" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const music = document.getElementById('bgMusic');
+    const progress = document.getElementById('progress');
+    const toggleBtn = document.querySelector('.music-btn');
+
+    music.volume = 0.5;
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const playPromise = music.play();
+
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          toggleBtn.textContent = "Включить";
         });
-        
-        function toggleMusic() {
-            if (music.paused) {
-                music.play();
-                toggleBtn.textContent = "Пауза";
-            } else {
-                music.pause();
-                toggleBtn.textContent = "Продолжить";
-            }
-        }
-        
-        function updateProgress() {
-            const progressPercent = (music.currentTime / music.duration) * 100;
-            progress.style.width = progressPercent + '%';
-        }
-        
-        // Комплименты
-        const compliments = [
-            "Reflex один из лучших!",
-            "Reflex легенда!",
-            "Reflex несравним!",
-            "Reflex топ!",
-            "Reflex божественен!",
-            "Reflex восхитителен!",
-            "Reflex феномен!",
-            "Reflex виртуоз!",
-            "Reflex чемпион!",
-            "Reflex кумир!",
-            "Reflex мега-звезда!",
-            "Reflex взрывает мозг!",
-            "Reflex нереален!",
-            "Reflex совершенство!",
-            "Reflex эталон!",
-            "Reflex выше всех!",
-            "Reflex номер 1!",
-            "Reflex исключительный!",
-            "Reflex превосходен!",
-            "Reflex великолепен!"
-        ];
-        
-        function createCompliment() {
-            const compliment = document.createElement('div');
-            compliment.className = 'compliment';
-            compliment.textContent = compliments[Math.floor(Math.random() * compliments.length)];
-            
-            // Случайное смещение по X (-50px до +50px от центра)
-            const randomOffset = Math.floor(Math.random() * 100) - 50;
-            compliment.style.setProperty('--random-offset', `${randomOffset}px`);
-            
-            // Случайная скорость
-            const duration = 5 + Math.random() * 5;
-            compliment.style.animationDuration = `${duration}s`;
-            
-            // Случайный размер
-            const size = 1.2 + Math.random() * 0.8;
-            compliment.style.fontSize = `${size}rem`;
-            
-            document.body.appendChild(compliment);
-            
-            // Удаление после анимации
-            setTimeout(() => {
-                compliment.remove();
-            }, duration * 1000);
-        }
-        
-        // Запускаем комплименты каждые 2 секунды
-        setInterval(createCompliment, 2000);
-        
-        // Первые 3 комплимента
-        for (let i = 0; i < 3; i++) {
-            setTimeout(createCompliment, i * 500);
-        }
-    </script>
+      }
+
+      music.addEventListener('timeupdate', updateProgress);
+    });
+
+    function toggleMusic() {
+      if (music.paused) {
+        music.play();
+        toggleBtn.textContent = "Пауза";
+      } else {
+        music.pause();
+        toggleBtn.textContent = "Продолжить";
+      }
+    }
+
+    function updateProgress() {
+      const progressPercent = (music.currentTime / music.duration) * 100;
+      progress.style.width = progressPercent + '%';
+    }
+  </script>
 </body>
 </html>
