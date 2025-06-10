@@ -120,9 +120,9 @@
   </style>
 </head>
 <body>
-  <!-- Тёмный видеофон -->
+  <!-- Видео-фон -->
   <video autoplay muted loop class="video-background">
-    <source src="https://cdn.pixabay.com/download/video/2023/03/04/video_24e2284d40.mp4?filename=abstract-technology-12437.mp4" type="video/mp4">
+    <source src="https://cdn.coverr.co/videos/coverr-dark-waves-5277/1080p.mp4" type="video/mp4">
   </video>
 
   <div class="content">
@@ -142,12 +142,12 @@
       <div class="progress-bar">
         <div class="progress" id="progress"></div>
       </div>
-      <button class="music-btn" onclick="toggleMusic()">Пауза</button>
+      <button class="music-btn" onclick="toggleMusic()">Включить</button>
     </div>
   </div>
 
   <audio id="bgMusic" loop>
-    <source src="https://media1.vocaroo.com/mp3/1o2D1nSLZgrW" type="audio/mpeg">
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
   </audio>
 
   <script>
@@ -155,34 +155,28 @@
     const progress = document.getElementById('progress');
     const toggleBtn = document.querySelector('.music-btn');
 
-    music.volume = 0.5;
-
-    document.addEventListener('DOMContentLoaded', function () {
-      const playPromise = music.play();
-
-      if (playPromise !== undefined) {
-        playPromise.catch(error => {
-          toggleBtn.textContent = "Включить";
-        });
-      }
-
-      music.addEventListener('timeupdate', updateProgress);
-    });
+    let isPlaying = false;
 
     function toggleMusic() {
-      if (music.paused) {
-        music.play();
-        toggleBtn.textContent = "Пауза";
-      } else {
+      if (isPlaying) {
         music.pause();
         toggleBtn.textContent = "Продолжить";
+      } else {
+        music.play().then(() => {
+          toggleBtn.textContent = "Пауза";
+        }).catch(err => {
+          alert("Ошибка воспроизведения. Попробуй ещё раз.");
+        });
       }
+      isPlaying = !isPlaying;
     }
 
-    function updateProgress() {
+    music.volume = 0.5;
+
+    music.addEventListener('timeupdate', () => {
       const progressPercent = (music.currentTime / music.duration) * 100;
       progress.style.width = progressPercent + '%';
-    }
+    });
   </script>
 </body>
 </html>
