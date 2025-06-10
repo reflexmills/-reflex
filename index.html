@@ -2,107 +2,75 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Reflex | Переходник</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: 'Arial', sans-serif;
-      overflow: hidden;
-      background-color: #000;
-      color: white;
+      margin: 0; padding: 0; height: 100vh;
+      display: flex; justify-content: center; align-items: center;
+      font-family: Arial, sans-serif;
+      background: #000; color: white; overflow: hidden;
     }
-
     .video-background {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; opacity: 0.8;
       z-index: -1;
-      object-fit: cover;
-      opacity: 0.8;
     }
-
     .content {
-      text-align: center;
+      text-align: center; max-width: 400px; width: 90%;
       z-index: 1;
-      width: 90%;
-      max-width: 400px;
     }
-
     .title {
-      font-size: 2.5rem;
-      margin-bottom: 30px;
+      font-size: 2.5rem; margin-bottom: 30px;
       font-weight: bold;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+      text-shadow: 0 0 10px rgba(255,255,255,0.3);
     }
-
     .buttons-column {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 30px;
+      display: flex; flex-direction: column;
+      gap: 10px; margin-bottom: 30px;
     }
-
     .btn {
       background-color: #000;
       color: white;
       border: 2px solid white;
       padding: 15px;
-      text-align: center;
-      text-decoration: none;
       font-weight: bold;
       font-size: 1.1rem;
-      transition: all 0.3s;
       cursor: pointer;
+      text-decoration: none;
       border-radius: 0;
+      transition: background-color 0.3s;
     }
-
     .btn:hover {
       background-color: #222;
     }
-
     .player-container {
-      margin-top: 30px;
-      background-color: rgba(0, 0, 0, 0.7);
+      background: rgba(0,0,0,0.7);
       padding: 15px;
       border-radius: 5px;
+      margin-top: 30px;
     }
-
     .track-info {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
-      font-size: 1rem;
+      display: flex; justify-content: space-between;
+      margin-bottom: 10px; font-size: 1rem;
     }
-
     .track-name {
       font-weight: bold;
     }
-
     .track-duration {
       opacity: 0.8;
     }
-
     .progress-bar {
-      height: 3px;
-      background-color: #333;
+      height: 3px; background: #333;
       margin-bottom: 15px;
       position: relative;
     }
-
     .progress {
       height: 100%;
-      background-color: white;
+      background: white;
       width: 0%;
     }
-
     .music-btn {
       background-color: #000;
       color: white;
@@ -113,17 +81,16 @@
       border-radius: 0;
       font-size: 1rem;
       margin-top: 10px;
+      transition: background-color 0.3s;
     }
-
     .music-btn:hover {
       background-color: #222;
     }
   </style>
 </head>
 <body>
-  <!-- Тёмный видеофон -->
-  <video autoplay muted loop class="video-background" playsinline>
-    <source src="https://cdn.pixabay.com/video/2023/03/04/151310-804215816_tiny.mp4" type="video/mp4">
+  <video autoplay muted loop playsinline class="video-background">
+    <source src="https://cdn.pixabay.com/video/2023/03/04/151310-804215816_tiny.mp4" type="video/mp4" />
   </video>
 
   <div class="content">
@@ -143,66 +110,52 @@
       <div class="progress-bar">
         <div class="progress" id="progress"></div>
       </div>
-      <button class="music-btn" id="toggleMusicBtn" onclick="toggleMusic()">Пауза</button>
-      <button class="music-btn" id="startMusicBtn" onclick="startMusic()" style="display: none;">Включить музыку</button>
+      <!-- Кнопка для запуска музыки -->
+      <button class="music-btn" id="startMusicBtn">Включить музыку</button>
+      <!-- Кнопка паузы/продолжения, скрыта по умолчанию -->
+      <button class="music-btn" id="toggleMusicBtn" style="display:none;">Пауза</button>
     </div>
   </div>
 
   <audio id="bgMusic" loop>
-    <source src="https://media1.vocaroo.com/mp3/1o2D1nSLZgrW" type="audio/mpeg">
+    <source src="https://media1.vocaroo.com/mp3/1o2D1nSLZgrW" type="audio/mpeg" />
   </audio>
 
   <script>
     const music = document.getElementById('bgMusic');
     const progress = document.getElementById('progress');
-    const toggleBtn = document.getElementById('toggleMusicBtn');
     const startBtn = document.getElementById('startMusicBtn');
+    const toggleBtn = document.getElementById('toggleMusicBtn');
 
     music.volume = 0.5;
 
-    document.addEventListener('DOMContentLoaded', function () {
-      const playPromise = music.play();
-
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            toggleBtn.textContent = "Пауза";
-          })
-          .catch(error => {
-            toggleBtn.style.display = "none";
-            startBtn.style.display = "inline-block";
-          });
-      }
-
-      music.addEventListener('timeupdate', updateProgress);
+    // Обновляем прогрессбар
+    music.addEventListener('timeupdate', () => {
+      const percent = (music.currentTime / music.duration) * 100;
+      progress.style.width = percent + '%';
     });
 
-    function toggleMusic() {
+    // При клике на старт — запускаем музыку и меняем кнопки
+    startBtn.addEventListener('click', () => {
+      music.play().then(() => {
+        startBtn.style.display = 'none';
+        toggleBtn.style.display = 'inline-block';
+        toggleBtn.textContent = 'Пауза';
+      }).catch((e) => {
+        alert('Не удалось воспроизвести аудио: ' + e.message);
+      });
+    });
+
+    // Кнопка пауза/проиграть
+    toggleBtn.addEventListener('click', () => {
       if (music.paused) {
         music.play();
-        toggleBtn.textContent = "Пауза";
+        toggleBtn.textContent = 'Пауза';
       } else {
         music.pause();
-        toggleBtn.textContent = "Продолжить";
+        toggleBtn.textContent = 'Продолжить';
       }
-    }
-
-    function startMusic() {
-      music.play()
-        .then(() => {
-          startBtn.style.display = "none";
-          toggleBtn.style.display = "inline-block";
-          toggleBtn.textContent = "Пауза";
-        })
-        .catch(error => {
-          alert("Не удалось воспроизвести музыку: " + error.message);
-        });
-    }
-
-    function updateProgress() {
-      const progressPercent = (music.currentTime / music.duration) * 100;
-      progress.style.width = progressPercent + '%';
-    }
+    });
   </script>
 </body>
 </html>
