@@ -15,16 +15,20 @@
       color: white;
     }
 
-    .video-background {
+    .video-container {
       position: fixed;
       top: 0;
       left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .video-container video {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      z-index: -1;
-      opacity: 0.6;
-      pointer-events: none;
     }
 
     .content {
@@ -91,11 +95,15 @@
 </head>
 <body>
 
-<video autoplay muted loop playsinline class="video-background">
-  <source src="background.mp4" type="video/mp4">
-  Ваш браузер не поддерживает видео.
-</video>
+<!-- Видео фон в контейнере -->
+<div class="video-container">
+  <video autoplay muted loop playsinline class="video-background" id="bgVideo">
+    <source src="background.mp4" type="video/mp4">
+    Ваш браузер не поддерживает видео.
+  </video>
+</div>
 
+<!-- Контент поверх фона -->
 <div class="content">
   <div class="title">Reflex | Переходник</div>
 
@@ -109,7 +117,7 @@
   <div class="progress-bar"><div class="progress" id="progress"></div></div>
 </div>
 
-<!-- 🎵 Локальная музыка -->
+<!-- Локальная музыка -->
 <audio id="bgMusic" preload="auto">
   <source src="music.mp3" type="audio/mpeg">
 </audio>
@@ -139,6 +147,11 @@
     const percent = (music.currentTime / music.duration) * 100;
     progress.style.width = percent + '%';
   });
+
+  // Логгирование состояния видео (для отладки, можно удалить позже)
+  const vid = document.getElementById('bgVideo');
+  vid.oncanplay = () => console.log('✅ Видео готово к воспроизведению');
+  vid.onerror = (e) => console.error('❌ Ошибка загрузки видео', e, vid.error);
 </script>
 
 </body>
