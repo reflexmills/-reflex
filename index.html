@@ -12,6 +12,7 @@
       background: black;
       font-family: Arial, sans-serif;
       overflow: hidden;
+      color: white;
     }
 
     .video-background {
@@ -22,7 +23,7 @@
       height: 100%;
       object-fit: cover;
       z-index: -1;
-      opacity: 0.8;
+      opacity: 0.7;
     }
 
     .content {
@@ -30,16 +31,15 @@
       z-index: 1;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
-      height: 100%;
+      align-items: center;
       text-align: center;
+      height: 100%;
       padding: 20px;
-      color: white;
     }
 
     .title {
-      font-size: 2.2rem;
+      font-size: 2rem;
       margin-bottom: 30px;
       font-weight: bold;
     }
@@ -47,63 +47,40 @@
     .buttons-column {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
       margin-bottom: 30px;
     }
 
-    .btn {
+    .btn, .music-btn {
       background-color: black;
       color: white;
       border: 2px solid white;
-      padding: 12px;
-      text-decoration: none;
+      padding: 12px 20px;
       font-weight: bold;
       font-size: 1rem;
       border-radius: 5px;
+      text-decoration: none;
+      cursor: pointer;
     }
 
-    .btn:hover {
+    .btn:hover, .music-btn:hover {
       background-color: #222;
-    }
-
-    .player-container {
-      background-color: rgba(0, 0, 0, 0.6);
-      padding: 15px;
-      border-radius: 8px;
-      width: 100%;
-      max-width: 300px;
-    }
-
-    .track-info {
-      display: flex;
-      justify-content: space-between;
-      font-size: 1rem;
-      margin-bottom: 10px;
     }
 
     .progress-bar {
       width: 100%;
+      max-width: 300px;
       height: 4px;
-      background: #555;
-      margin-bottom: 15px;
-      position: relative;
+      background: #444;
+      margin: 15px auto;
+      border-radius: 3px;
+      overflow: hidden;
     }
 
     .progress {
-      height: 100%;
-      background-color: white;
       width: 0%;
-    }
-
-    .music-btn {
-      background-color: black;
-      color: white;
-      border: 2px solid white;
-      padding: 10px 25px;
-      font-weight: bold;
-      font-size: 1rem;
-      border-radius: 5px;
-      cursor: pointer;
+      height: 100%;
+      background: white;
     }
   </style>
 </head>
@@ -122,16 +99,8 @@
     <a href="https://forum.blackrussia.online/members/reflex_mills.2835116/" class="btn">Forum</a>
   </div>
 
-  <div class="player-container">
-    <div class="track-info">
-      <span class="track-name">Reflex Audio</span>
-      <span class="track-duration">2:28</span>
-    </div>
-    <div class="progress-bar">
-      <div class="progress" id="progress"></div>
-    </div>
-    <button class="music-btn" onclick="toggleMusic()">▶ Включить</button>
-  </div>
+  <button class="music-btn" onclick="toggleMusic()">▶ Включить музыку</button>
+  <div class="progress-bar"><div class="progress" id="progress"></div></div>
 </div>
 
 <audio id="bgMusic" preload="auto">
@@ -140,9 +109,8 @@
 
 <script>
   const music = document.getElementById('bgMusic');
-  const progress = document.getElementById('progress');
   const btn = document.querySelector('.music-btn');
-
+  const progress = document.getElementById('progress');
   let isPlaying = false;
 
   function toggleMusic() {
@@ -150,12 +118,12 @@
       music.play().then(() => {
         btn.textContent = '⏸ Пауза';
         isPlaying = true;
-      }).catch(err => {
-        alert("Нажми на экран — тогда начнётся музыка (ограничения браузера)");
+      }).catch(() => {
+        alert("Нажми на экран или кнопку — тогда начнётся музыка. Это ограничение браузера.");
       });
     } else {
       music.pause();
-      btn.textContent = '▶ Продолжить';
+      btn.textContent = '▶ Включить музыку';
       isPlaying = false;
     }
   }
