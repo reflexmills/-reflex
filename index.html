@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reflex Social Links</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            background-color: #000;
+        }
+        
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            object-fit: cover;
+            opacity: 0.7;
+        }
+        
+        .content {
+            text-align: center;
+            z-index: 1;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            max-width: 80%;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(255, 0, 213, 0.7);
+        }
+        
+        .btn {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #ff00cc, #3333ff);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .music-player {
+            margin-top: 30px;
+        }
+        
+        .music-btn {
+            background: linear-gradient(45deg, #00ffcc, #0066ff);
+            padding: 12px 25px;
+            border-radius: 50px;
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .music-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .compliment {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(255, 0, 213, 0.7);
+            animation: float 10s linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop class="video-background">
+        <source src="https://vt.tiktok.com/ZSk5Md6vm/" type="video/mp4">
+        Ваш браузер не поддерживает видео.
+    </video>
+    
+    <div class="content">
+        <h1>Reflex Social Links</h1>
+        
+        <a href="https://t.me/yareflex1" class="btn">Telegram</a>
+        <a href="https://vk.com/yareflex" class="btn">VK</a>
+        <a href="https://forum.blackrussia.online/members/reflex_mills.2835116/" class="btn">Forum</a>
+        
+        <div class="music-player">
+            <audio id="bgMusic" loop>
+                <source src="https://soundcloud.com/unknown_beat/under-my-skin" type="audio/mpeg">
+                Ваш браузер не поддерживает аудио элемент.
+            </audio>
+            <button class="music-btn" onclick="toggleMusic()">Пауза</button>
+        </div>
+    </div>
+
+    <script>
+        // Автовоспроизведение музыки
+        document.addEventListener('DOMContentLoaded', function() {
+            const music = document.getElementById('bgMusic');
+            music.volume = 0.5;
+            
+            // Попытка автовоспроизведения (может не работать без взаимодействия пользователя)
+            const playPromise = music.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log("Автовоспроизведение заблокировано");
+                    document.querySelector('.music-btn').textContent = "Включить";
+                });
+            }
+        });
+        
+        function toggleMusic() {
+            const music = document.getElementById('bgMusic');
+            const btn = document.querySelector('.music-btn');
+            
+            if (music.paused) {
+                music.play();
+                btn.textContent = "Пауза";
+            } else {
+                music.pause();
+                btn.textContent = "Продолжить";
+            }
+        }
+        
+        // Генерация комплиментов
+        const compliments = [
+            "Reflex лучший!",
+            "Reflex 💋",
+            "Reflex 🔥",
+            "Reflex один из лучших",
+            "Reflex mills..",
+            "Reflex 😍",
+            "Reflex легенда!",
+            "Reflex 🚀",
+            "Reflex 👑",
+            "Reflex my boss"
+        ];
+        
+        function createCompliment() {
+            const compliment = document.createElement('div');
+            compliment.className = 'compliment';
+            compliment.textContent = compliments[Math.floor(Math.random() * compliments.length)];
+            
+            // Случайная позиция по горизонтали
+            compliment.style.left = Math.random() * 100 + 'vw';
+            
+            // Случайная задержка анимации
+            compliment.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            
+            document.body.appendChild(compliment);
+            
+            // Удаление элемента после завершения анимации
+            setTimeout(() => {
+                compliment.remove();
+            }, 10000);
+        }
+        
+        // Создаем комплименты каждые 1.5 секунды
+        setInterval(createCompliment, 1500);
+        
+        // Первые несколько комплиментов
+        for (let i = 0; i < 5; i++) {
+            setTimeout(createCompliment, i * 300);
+        }
+    </script>
+</body>
+</html>
