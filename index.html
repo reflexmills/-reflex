@@ -36,7 +36,7 @@
             padding: 30px;
             border-radius: 15px;
             backdrop-filter: blur(5px);
-            max-width: 80%;
+            max-width: 90%;
         }
         
         h1 {
@@ -45,35 +45,45 @@
             text-shadow: 0 0 10px rgba(255, 0, 213, 0.7);
         }
         
+        .buttons-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
         .btn {
             display: inline-block;
-            margin: 10px;
-            padding: 15px 30px;
+            width: 120px;
+            height: 50px;
+            line-height: 50px;
             background: linear-gradient(45deg, #ff00cc, #3333ff);
             color: white;
             text-decoration: none;
-            border-radius: 50px;
+            border-radius: 10px;
             font-weight: bold;
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1rem;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
         }
         
         .btn:hover {
-            transform: translateY(-3px);
+            transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
         
         .music-player {
-            margin-top: 30px;
+            margin-top: 20px;
         }
         
         .music-btn {
             background: linear-gradient(45deg, #00ffcc, #0066ff);
             padding: 12px 25px;
-            border-radius: 50px;
+            border-radius: 10px;
             border: none;
             color: white;
             font-weight: bold;
@@ -89,18 +99,19 @@
         
         .compliment {
             position: absolute;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.8rem;
             font-weight: bold;
-            text-shadow: 0 0 5px rgba(255, 0, 213, 0.7);
-            animation: float 10s linear infinite;
+            text-shadow: 0 0 10px rgba(255, 0, 213, 0.9);
+            animation: floatDown 8s linear forwards;
             z-index: 0;
             pointer-events: none;
+            white-space: nowrap;
         }
         
-        @keyframes float {
+        @keyframes floatDown {
             0% {
-                transform: translateY(100vh) rotate(0deg);
+                transform: translateY(-100px) translateX(calc(-50% + ${Math.random() * 100 - 50}px));
                 opacity: 0;
             }
             10% {
@@ -110,7 +121,7 @@
                 opacity: 1;
             }
             100% {
-                transform: translateY(-100px) rotate(360deg);
+                transform: translateY(100vh) translateX(calc(-50% + ${Math.random() * 100 - 50}px));
                 opacity: 0;
             }
         }
@@ -125,9 +136,11 @@
     <div class="content">
         <h1>Reflex Social Links</h1>
         
-        <a href="https://t.me/yareflex1" class="btn">Telegram</a>
-        <a href="https://vk.com/yareflex" class="btn">VK</a>
-        <a href="https://forum.blackrussia.online/members/reflex_mills.2835116/" class="btn">Forum</a>
+        <div class="buttons-column">
+            <a href="https://t.me/yareflex1" class="btn">Telegram</a>
+            <a href="https://vk.com/yareflex" class="btn">VK</a>
+            <a href="https://forum.blackrussia.online/members/reflex_mills.2835116/" class="btn">Forum</a>
+        </div>
         
         <div class="music-player">
             <audio id="bgMusic" loop>
@@ -144,7 +157,6 @@
             const music = document.getElementById('bgMusic');
             music.volume = 0.5;
             
-            // Попытка автовоспроизведения (может не работать без взаимодействия пользователя)
             const playPromise = music.play();
             
             if (playPromise !== undefined) {
@@ -168,18 +180,26 @@
             }
         }
         
-        // Генерация комплиментов
+        // 50+ разных комплиментов
         const compliments = [
-            "Reflex лучший!",
-            "Reflex 💋",
-            "Reflex 🔥",
-            "Reflex один из лучших",
-            "Reflex mills..",
-            "Reflex 😍",
-            "Reflex легенда!",
-            "Reflex 🚀",
-            "Reflex 👑",
-            "Reflex my boss"
+            "Reflex лучший! 💎", "Reflex король! 👑", "Reflex божественен! ✨", 
+            "Reflex топ! 🔥", "Reflex легенда! 🏆", "Reflex нереален! 🚀",
+            "Reflex потрясающий! 🌟", "Reflex обалденный! 💫", "Reflex восхитителен! 😍",
+            "Reflex великолепен! 💖", "Reflex фантастичен! 🌈", "Reflex гениален! 🧠",
+            "Reflex уникален! 💯", "Reflex стильный! 💃", "Reflex мощный! 💪",
+            "Reflex обворожителен! 😘", "Reflex впечатляет! 🤩", "Reflex вдохновляет! ✊",
+            "Reflex превосходен! 👍", "Reflex идеален! 💞", "Reflex безупречен! ✅",
+            "Reflex блистателен! ✨", "Reflex совершенен! 💎", "Reflex завораживает! 😎",
+            "Reflex покоряет! 🏹", "Reflex сияет! ☀️", "Reflex круче всех! 🚀",
+            "Reflex чемпион! 🏅", "Reflex мега-звезда! 🌠", "Reflex взрывает! 💥",
+            "Reflex несравним! ⚡", "Reflex волшебник! 🎩", "Reflex сенсация! 🌍",
+            "Reflex феномен! 🌌", "Reflex мастер! 🎯", "Reflex виртуоз! 🎸",
+            "Reflex артист! 🎭", "Reflex профи! 🎮", "Reflex лидер! 🥇",
+            "Reflex герой! 🦸", "Reflex кумир! 🤴", "Reflex сокровище! 💰",
+            "Reflex бриллиант! 💎", "Reflex жемчужина! 🏆", "Reflex счастье! 😊",
+            "Reflex восторг! 🤗", "Reflex мечта! 💭", "Reflex энергия! ⚡",
+            "Reflex огонь! 🔥", "Reflex взлет! ✈️", "Reflex успех! 🎯",
+            "Reflex победа! 🏁", "Reflex драйв! 🏎", "Reflex кайф! 😎"
         ];
         
         function createCompliment() {
@@ -187,26 +207,32 @@
             compliment.className = 'compliment';
             compliment.textContent = compliments[Math.floor(Math.random() * compliments.length)];
             
-            // Случайная позиция по горизонтали
-            compliment.style.left = Math.random() * 100 + 'vw';
+            // Случайная позиция по горизонтали (центрировано с небольшим смещением)
+            const startX = 50 + (Math.random() * 20 - 10); // 40-60% ширины экрана
+            compliment.style.left = startX + '%';
             
-            // Случайная задержка анимации
-            compliment.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            // Случайная скорость анимации
+            const duration = 5 + Math.random() * 5; // 5-10 секунд
+            compliment.style.animationDuration = duration + 's';
+            
+            // Случайный размер
+            const size = 1.5 + Math.random() * 0.5; // 1.5-2rem
+            compliment.style.fontSize = size + 'rem';
             
             document.body.appendChild(compliment);
             
             // Удаление элемента после завершения анимации
             setTimeout(() => {
                 compliment.remove();
-            }, 10000);
+            }, duration * 1000);
         }
         
-        // Создаем комплименты каждые 1.5 секунды
-        setInterval(createCompliment, 1500);
+        // Запускаем новый комплимент каждые 5 секунд
+        setInterval(createCompliment, 5000);
         
-        // Первые несколько комплиментов
-        for (let i = 0; i < 5; i++) {
-            setTimeout(createCompliment, i * 300);
+        // Сразу создаем 3 комплимента
+        for (let i = 0; i < 3; i++) {
+            setTimeout(createCompliment, i * 1000);
         }
     </script>
 </body>
