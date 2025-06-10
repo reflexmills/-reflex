@@ -23,7 +23,7 @@
       height: 100%;
       object-fit: cover;
       z-index: -1;
-      opacity: 0.8;
+      opacity: 0.7;
       pointer-events: none;
     }
 
@@ -43,13 +43,13 @@
       font-size: 2.5rem;
       margin-bottom: 30px;
       font-weight: bold;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
     }
 
     .buttons-column {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 15px;
       margin-bottom: 30px;
       width: 100%;
       max-width: 320px;
@@ -62,22 +62,23 @@
       padding: 15px;
       font-weight: bold;
       font-size: 1.1rem;
-      border-radius: 0;
+      border-radius: 6px;
       text-decoration: none;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: all 0.3s ease;
     }
 
     .btn:hover, .music-btn:hover {
       background-color: #222;
+      transform: scale(1.05);
     }
 
     .progress-bar {
       width: 100%;
       max-width: 300px;
-      height: 4px;
+      height: 5px;
       background: #444;
-      margin: 15px auto;
+      margin: 20px auto;
       border-radius: 3px;
       overflow: hidden;
     }
@@ -87,13 +88,23 @@
       height: 100%;
       background: white;
     }
+
+    @media (max-width: 500px) {
+      .title {
+        font-size: 1.8rem;
+      }
+      .btn, .music-btn {
+        font-size: 1rem;
+        padding: 12px;
+      }
+    }
   </style>
 </head>
 <body>
 
-<!-- 🔥 Видеофон -->
+<!-- 🎥 Видеофон (лёгкий и мобильный совместимый) -->
 <video autoplay muted loop playsinline class="video-background">
-  <source src="https://cdn.pixabay.com/video/2023/03/04/151310-804215816_tiny.mp4" type="video/mp4">
+  <source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
   Ваш браузер не поддерживает видео.
 </video>
 
@@ -101,16 +112,17 @@
   <div class="title">Reflex | Переходник</div>
 
   <div class="buttons-column">
-    <a href="https://vk.com/yareflex" class="btn">VK</a>
-    <a href="https://t.me/yareflex1" class="btn">Telegram</a>
-    <a href="https://forum.blackrussia.online/members/reflex_mills.2835116/" class="btn">Forum</a>
+    <a href="https://vk.com/yareflex" class="btn" target="_blank">VK</a>
+    <a href="https://t.me/yareflex1" class="btn" target="_blank">Telegram</a>
+    <a href="https://forum.blackrussia.online/members/reflex_mills.2835116/" class="btn" target="_blank">Forum</a>
   </div>
 
   <button class="music-btn" onclick="toggleMusic()">▶ Включить музыку</button>
   <div class="progress-bar"><div class="progress" id="progress"></div></div>
 </div>
 
-<audio id="bgMusic" preload="auto" playsinline>
+<!-- 🎵 Аудио -->
+<audio id="bgMusic" preload="auto">
   <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
 </audio>
 
@@ -126,7 +138,7 @@
         btn.textContent = '⏸ Пауза';
         isPlaying = true;
       }).catch(() => {
-        alert("⚠️ Нажми на экран или кнопку — тогда начнётся музыка. Это ограничение браузера.");
+        alert("⚠️ Нажми на экран или кнопку — тогда музыка начнётся (ограничение браузера).");
       });
     } else {
       music.pause();
