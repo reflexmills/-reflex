@@ -9,10 +9,12 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      background: black;
+      background: transparent; /* Убираем чёрный фон */
       font-family: Arial, sans-serif;
       overflow: hidden;
       color: white;
+      position: relative;
+      z-index: 0;
     }
 
     .video-container {
@@ -22,7 +24,7 @@
       width: 100vw;
       height: 100vh;
       overflow: hidden;
-      z-index: -1;
+      z-index: -1; /* Фон под контентом */
     }
 
     .video-container video {
@@ -95,64 +97,60 @@
 </head>
 <body>
 
-<!-- Видео фон в контейнере -->
-<div class="video-container">
-  <video autoplay muted loop playsinline class="video-background" id="bgVideo">
-    <source src="background.mp4" type="video/mp4">
-    Ваш браузер не поддерживает видео.
-  </video>
-</div>
-
-<!-- Контент поверх фона -->
-<div class="content">
-  <div class="title">Reflex | Переходник</div>
-
-  <div class="buttons-column">
-    <a href="https://vk.com/yareflex" class="btn">VK</a>
-    <a href="https://t.me/yareflex1" class="btn">Telegram</a>
-    <a href="https://forum.blackrussia.online/members/reflex_mills.2835116/" class="btn">Forum</a>
+  <div class="video-container">
+    <video autoplay muted loop playsinline id="bgVideo">
+      <source src="background.mp4" type="video/mp4">
+      Ваш браузер не поддерживает видео.
+    </video>
   </div>
 
-  <button class="music-btn" onclick="toggleMusic()">▶ Включить музыку</button>
-  <div class="progress-bar"><div class="progress" id="progress"></div></div>
-</div>
+  <div class="content">
+    <div class="title">Reflex | Переходник</div>
 
-<!-- Локальная музыка -->
-<audio id="bgMusic" preload="auto">
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
+    <div class="buttons-column">
+      <a href="https://vk.com/yareflex" class="btn">VK</a>
+      <a href="https://t.me/yareflex1" class="btn">Telegram</a>
+      <a href="https://forum.blackrussia.online/members/reflex_mills.2835116/" class="btn">Forum</a>
+    </div>
 
-<script>
-  const music = document.getElementById('bgMusic');
-  const btn = document.querySelector('.music-btn');
-  const progress = document.getElementById('progress');
-  let isPlaying = false;
+    <button class="music-btn" onclick="toggleMusic()">▶ Включить музыку</button>
+    <div class="progress-bar"><div class="progress" id="progress"></div></div>
+  </div>
 
-  function toggleMusic() {
-    if (!isPlaying) {
-      music.play().then(() => {
-        btn.textContent = '⏸ Пауза';
-        isPlaying = true;
-      }).catch(() => {
-        alert("Нажми на экран или кнопку — тогда начнётся музыка. Это ограничение браузера.");
-      });
-    } else {
-      music.pause();
-      btn.textContent = '▶ Включить музыку';
-      isPlaying = false;
+  <audio id="bgMusic" preload="auto">
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const music = document.getElementById('bgMusic');
+    const btn = document.querySelector('.music-btn');
+    const progress = document.getElementById('progress');
+    let isPlaying = false;
+
+    function toggleMusic() {
+      if (!isPlaying) {
+        music.play().then(() => {
+          btn.textContent = '⏸ Пауза';
+          isPlaying = true;
+        }).catch(() => {
+          alert("Нажми на экран или кнопку — тогда начнётся музыка. Это ограничение браузера.");
+        });
+      } else {
+        music.pause();
+        btn.textContent = '▶ Включить музыку';
+        isPlaying = false;
+      }
     }
-  }
 
-  music.addEventListener('timeupdate', () => {
-    const percent = (music.currentTime / music.duration) * 100;
-    progress.style.width = percent + '%';
-  });
+    music.addEventListener('timeupdate', () => {
+      const percent = (music.currentTime / music.duration) * 100;
+      progress.style.width = percent + '%';
+    });
 
-  // Логгирование состояния видео (для отладки, можно удалить позже)
-  const vid = document.getElementById('bgVideo');
-  vid.oncanplay = () => console.log('✅ Видео готово к воспроизведению');
-  vid.onerror = (e) => console.error('❌ Ошибка загрузки видео', e, vid.error);
-</script>
+    const vid = document.getElementById('bgVideo');
+    vid.oncanplay = () => console.log('✅ Видео готово к воспроизведению');
+    vid.onerror = (e) => console.error('❌ Ошибка загрузки видео', e, vid.error);
+  </script>
 
 </body>
 </html>
